@@ -1,0 +1,184 @@
+[
+    {
+        "id": "IMG_001",
+        "time": "2024-05-10T10:30:00",
+        "location": {
+            "poi": null,
+            "suburb": "Eixample",
+            "city": "Barcelona",
+            "full_address": "Catalonia Square, la Dreta de l'Eixample, Eixample, Barcelona, Barcelonès, Barcelona, Catalonia, 08007, Spain"
+        },
+        "weather": {
+            "temp": "24.2°C",
+            "condition": "Clear sky"
+        }
+    },
+    {
+        "id": "IMG_002",
+        "time": "2024-05-10T11:00:00",
+        "location": {
+            "poi": null,
+            "suburb": "Eixample",
+            "city": "Barcelona",
+            "full_address": "12-13, Plaça de Catalunya, la Dreta de l'Eixample, Eixample, Barcelona, Barcelonès, Barcelona, Catalonia, 08010, Spain"
+        },
+        "weather": {
+            "temp": "24.1°C",
+            "condition": "Clear sky"
+        }
+    },
+    {
+        "id": "IMG_003",
+        "time": "2024-05-10T14:15:00",
+        "location": {
+            "poi": "Cases dels Canonges",
+            "suburb": "Old Town",
+            "city": "Barcelona",
+            "full_address": "Cases dels Canonges, Carrer del Bisbe, Gothic Quarter, Old Town, Barcelona, Barcelonès, Barcelona, Catalonia, 08002, Spain"
+        },
+        "weather": {
+            "temp": "24.1°C",
+            "condition": "Clear sky"
+        }
+    },
+    {
+        "id": "IMG_004",
+        "time": "2024-05-10T15:00:00",
+        "location": {
+            "poi": null,
+            "suburb": "Old Town",
+            "city": "Barcelona",
+            "full_address": "13, Carrer del Veguer, Gothic Quarter, Old Town, Barcelona, Barcelonès, Barcelona, Catalonia, 08002, Spain"
+        },
+        "weather": {
+            "temp": "24.1°C",
+            "condition": "Clear sky"
+        }
+    },
+    {
+        "id": "IMG_005",
+        "time": "2024-05-10T20:45:00",
+        "location": {
+            "poi": null,
+            "suburb": "Old Town",
+            "city": "Barcelona",
+            "full_address": "19, Carrer de Ferran, Gothic Quarter, Old Town, Barcelona, Barcelonès, Barcelona, Catalonia, 08002, Spain"
+        },
+        "weather": {
+            "temp": "24.1°C",
+            "condition": "Clear sky"
+        }
+    },
+    {
+        "id": "IMG_006",
+        "time": "2024-05-11T09:00:00",
+        "location": {
+            "poi": null,
+            "suburb": "Eixample",
+            "city": "Barcelona",
+            "full_address": "Carrer de Mallorca, la Sagrada Família, Eixample, Barcelona, Barcelonès, Barcelona, Catalonia, 08013, Spain"
+        },
+        "weather": {
+            "temp": "22.4°C",
+            "condition": "Partly cloudy"
+        }
+    },
+    {
+        "id": "IMG_007",
+        "time": "2024-05-11T09:45:00",
+        "location": {
+            "poi": null,
+            "suburb": "Eixample",
+            "city": "Barcelona",
+            "full_address": "253, Carrer de la Marina, la Sagrada Família, Eixample, Barcelona, Barcelonès, Barcelona, Catalonia, 08013, Spain"
+        },
+        "weather": {
+            "temp": "22.4°C",
+            "condition": "Partly cloudy"
+        }
+    },
+    {
+        "id": "IMG_008",
+        "time": "2024-05-11T12:30:00",
+        "location": {
+            "poi": "06-137",
+            "suburb": "Gràcia",
+            "city": "Barcelona",
+            "full_address": "06-137, Viaducte del Mig, la Salut, Gràcia, Barcelona, Barcelonès, Barcelona, Catalonia, 08023, Spain"
+        },
+        "weather": {
+            "temp": "21.5°C",
+            "condition": "Partly cloudy"
+        }
+    },
+    {
+        "id": "IMG_009",
+        "time": "2024-05-11T13:15:00",
+        "location": {
+            "poi": null,
+            "suburb": "Gràcia",
+            "city": "Barcelona",
+            "full_address": "Viaducte del Mig, la Salut, Gràcia, Barcelona, Barcelonès, Barcelona, Catalonia, 08023, Spain"
+        },
+        "weather": {
+            "temp": "21.4°C",
+            "condition": "Partly cloudy"
+        }
+    },
+    {
+        "id": "IMG_010",
+        "time": "2024-05-11T17:30:00",
+        "location": {
+            "poi": null,
+            "suburb": "Eixample",
+            "city": "Barcelona",
+            "full_address": "43, Passeig de Gràcia, la Dreta de l'Eixample, Eixample, Barcelona, Barcelonès, Barcelona, Catalonia, 08007, Spain"
+        },
+        "weather": {
+            "temp": "22.4°C",
+            "condition": "Partly cloudy"
+        }
+    },
+    {
+        "id": "IMG_011",
+        "time": "2024-05-12T10:00:00",
+        "location": {
+            "poi": null,
+            "suburb": "Old Town",
+            "city": "Barcelona",
+            "full_address": "3, Carrer de Vinaròs, la Barceloneta, Old Town, Barcelona, Barcelonès, Barcelona, Catalonia, 08003, Spain"
+        },
+        "weather": {
+            "temp": "22.5°C",
+            "condition": "Moderate drizzle"
+        }
+    },
+    {
+        "id": "IMG_012",
+        "time": "2024-05-12T11:00:00",
+        "location": {
+            "poi": null,
+            "suburb": "Old Town",
+            "city": "Barcelona",
+            "full_address": "45, Carrer d'Andrea Dòria, la Barceloneta, Old Town, Barcelona, Barcelonès, Barcelona, Catalonia, 08003, Spain"
+        },
+        "weather": {
+            "temp": "22.5°C",
+            "condition": "Moderate drizzle"
+        }
+    },
+    {
+        "id": "IMG_013",
+        "time": "2024-05-12T11:45:00",
+        "location": {
+            "poi": null,
+            "suburb": "Old Town",
+            "city": "Barcelona",
+            "full_address": "A Víctor Balaguer, Plaça de Sonia Rescalvo Zafra, el Born, Sant Pere, Santa Caterina i la Ribera, Old Town, Barcelona, Barcelonès, Barcelona, Catalonia, 08003, Spain"
+        },
+        "weather": {
+            "temp": "22.5°C",
+            "condition": "Moderate drizzle"
+        }
+    }
+]
