@@ -1,77 +1,103 @@
 {
     "41.387,2.17": {
+        "lat": 41.3871,
+        "lon": 2.1701,
         "display_name": "Catalonia Square, la Dreta de l'Eixample, Eixample, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08007, Spain",
         "city": "Barcelona",
         "suburb": "Eixample",
         "poi": null
     },
     "41.388,2.171": {
+        "lat": 41.388,
+        "lon": 2.1705,
         "display_name": "12-13, Pla\u00e7a de Catalunya, la Dreta de l'Eixample, Eixample, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08010, Spain",
         "city": "Barcelona",
         "suburb": "Eixample",
         "poi": null
     },
     "41.383,2.177": {
+        "lat": 41.3833,
+        "lon": 2.1769,
         "display_name": "Cases dels Canonges, Carrer del Bisbe, Gothic Quarter, Old Town, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08002, Spain",
         "city": "Barcelona",
         "suburb": "Old Town",
         "poi": "Cases dels Canonges"
     },
     "41.384,2.178": {
+        "lat": 41.384,
+        "lon": 2.1775,
         "display_name": "13, Carrer del Veguer, Gothic Quarter, Old Town, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08002, Spain",
         "city": "Barcelona",
         "suburb": "Old Town",
         "poi": null
     },
     "41.381,2.175": {
+        "lat": 41.381,
+        "lon": 2.175,
         "display_name": "19, Carrer de Ferran, Gothic Quarter, Old Town, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08002, Spain",
         "city": "Barcelona",
         "suburb": "Old Town",
         "poi": null
     },
     "41.404,2.174": {
+        "lat": 41.4036,
+        "lon": 2.1744,
         "display_name": "Carrer de Mallorca, la Sagrada Fam\u00edlia, Eixample, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08013, Spain",
         "city": "Barcelona",
         "suburb": "Eixample",
         "poi": null
     },
     "41.404,2.175": {
+        "lat": 41.404,
+        "lon": 2.175,
         "display_name": "253, Carrer de la Marina, la Sagrada Fam\u00edlia, Eixample, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08013, Spain",
         "city": "Barcelona",
         "suburb": "Eixample",
         "poi": null
     },
     "41.414,2.153": {
+        "lat": 41.4145,
+        "lon": 2.1527,
         "display_name": "06-137, Viaducte del Mig, la Salut, Gr\u00e0cia, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08023, Spain",
         "city": "Barcelona",
         "suburb": "Gr\u00e0cia",
         "poi": "06-137"
     },
     "41.415,2.154": {
+        "lat": 41.415,
+        "lon": 2.1535,
         "display_name": "Viaducte del Mig, la Salut, Gr\u00e0cia, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08023, Spain",
         "city": "Barcelona",
         "suburb": "Gr\u00e0cia",
         "poi": null
     },
     "41.392,2.165": {
+        "lat": 41.3917,
+        "lon": 2.1649,
         "display_name": "43, Passeig de Gr\u00e0cia, la Dreta de l'Eixample, Eixample, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08007, Spain",
         "city": "Barcelona",
         "suburb": "Eixample",
         "poi": null
     },
     "41.38,2.19": {
+        "lat": 41.38,
+        "lon": 2.19,
         "display_name": "3, Carrer de Vinar\u00f2s, la Barceloneta, Old Town, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08003, Spain",
         "city": "Barcelona",
         "suburb": "Old Town",
         "poi": null
     },
     "41.38,2.191": {
+        "lat": 41.3805,
+        "lon": 2.191,
         "display_name": "45, Carrer d'Andrea D\u00f2ria, la Barceloneta, Old Town, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08003, Spain",
         "city": "Barcelona",
         "suburb": "Old Town",
         "poi": null
     },
     "41.389,2.185": {
+        "lat": 41.3888,
+        "lon": 2.185,
         "display_name": "A V\u00edctor Balaguer, Pla\u00e7a de Sonia Rescalvo Zafra, el Born, Sant Pere, Santa Caterina i la Ribera, Old Town, Barcelona, Barcelon\u00e8s, Barcelona, Catalonia, 08003, Spain",
         "city": "Barcelona",
         "suburb": "Old Town",

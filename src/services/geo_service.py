@@ -26,11 +26,12 @@ class GeoService:
             response = requests.get(self.base_url, params=params, headers=self.headers)
             response.raise_for_status()
             data = response.json()
-            
             address = data.get("address", {})
             
             # חילוץ הפרטים המעניינים ביותר עבור ה-Data Fusion
             location_info = {
+                "lat": lat,
+                "lon": lon,
                 "display_name": data.get("display_name"), # הכתובת המלאה
                 "city": address.get("city") or address.get("town") or address.get("village"),
                 "suburb": address.get("suburb") or address.get("neighbourhood"),

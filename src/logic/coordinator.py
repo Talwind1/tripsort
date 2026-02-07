@@ -60,6 +60,8 @@ class TripCoordinator:
                 "time": timestamp,
                 # אנחנו שומרים את כל האובייקט שהגיע מה-GeoService
                 "location": {
+                    "lat": location_data.get('lat'),
+                    "lon": location_data.get('lon'),
                     "poi": location_data.get('poi'),
                     "suburb": location_data.get('suburb'),
                     "city": location_data.get('city'),

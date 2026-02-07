@@ -3,6 +3,8 @@
         "id": "IMG_001",
         "time": "2024-05-10T10:30:00",
         "location": {
+            "lat": 41.3871,
+            "lon": 2.1701,
             "poi": null,
             "suburb": "Eixample",
             "city": "Barcelona",
@@ -17,6 +19,8 @@
         "id": "IMG_002",
         "time": "2024-05-10T11:00:00",
         "location": {
+            "lat": 41.388,
+            "lon": 2.1705,
             "poi": null,
             "suburb": "Eixample",
             "city": "Barcelona",
@@ -31,6 +35,8 @@
         "id": "IMG_003",
         "time": "2024-05-10T14:15:00",
         "location": {
+            "lat": 41.3833,
+            "lon": 2.1769,
             "poi": "Cases dels Canonges",
             "suburb": "Old Town",
             "city": "Barcelona",
@@ -45,6 +51,8 @@
         "id": "IMG_004",
         "time": "2024-05-10T15:00:00",
         "location": {
+            "lat": 41.384,
+            "lon": 2.1775,
             "poi": null,
             "suburb": "Old Town",
             "city": "Barcelona",
@@ -59,6 +67,8 @@
         "id": "IMG_005",
         "time": "2024-05-10T20:45:00",
         "location": {
+            "lat": 41.381,
+            "lon": 2.175,
             "poi": null,
             "suburb": "Old Town",
             "city": "Barcelona",
@@ -73,6 +83,8 @@
         "id": "IMG_006",
         "time": "2024-05-11T09:00:00",
         "location": {
+            "lat": 41.4036,
+            "lon": 2.1744,
             "poi": null,
             "suburb": "Eixample",
             "city": "Barcelona",
@@ -87,6 +99,8 @@
         "id": "IMG_007",
         "time": "2024-05-11T09:45:00",
         "location": {
+            "lat": 41.404,
+            "lon": 2.175,
             "poi": null,
             "suburb": "Eixample",
             "city": "Barcelona",
@@ -101,6 +115,8 @@
         "id": "IMG_008",
         "time": "2024-05-11T12:30:00",
         "location": {
+            "lat": 41.4145,
+            "lon": 2.1527,
             "poi": "06-137",
             "suburb": "Gràcia",
             "city": "Barcelona",
@@ -115,6 +131,8 @@
         "id": "IMG_009",
         "time": "2024-05-11T13:15:00",
         "location": {
+            "lat": 41.415,
+            "lon": 2.1535,
             "poi": null,
             "suburb": "Gràcia",
             "city": "Barcelona",
@@ -129,6 +147,8 @@
         "id": "IMG_010",
         "time": "2024-05-11T17:30:00",
         "location": {
+            "lat": 41.3917,
+            "lon": 2.1649,
             "poi": null,
             "suburb": "Eixample",
             "city": "Barcelona",
@@ -143,6 +163,8 @@
         "id": "IMG_011",
         "time": "2024-05-12T10:00:00",
         "location": {
+            "lat": 41.38,
+            "lon": 2.19,
             "poi": null,
             "suburb": "Old Town",
             "city": "Barcelona",
@@ -157,6 +179,8 @@
         "id": "IMG_012",
         "time": "2024-05-12T11:00:00",
         "location": {
+            "lat": 41.3805,
+            "lon": 2.191,
             "poi": null,
             "suburb": "Old Town",
             "city": "Barcelona",
@@ -171,6 +195,8 @@
         "id": "IMG_013",
         "time": "2024-05-12T11:45:00",
         "location": {
+            "lat": 41.3888,
+            "lon": 2.185,
             "poi": null,
             "suburb": "Old Town",
             "city": "Barcelona",
