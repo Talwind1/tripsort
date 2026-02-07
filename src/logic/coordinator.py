@@ -2,7 +2,8 @@ import time
 import json
 import os
 import sys
-import os
+from datetime import datetime
+
 sys.path.append(os.getcwd())
 
 class TripCoordinator:
@@ -24,9 +25,42 @@ class TripCoordinator:
         with open(self.cache_file, 'w') as f:
             json.dump(self.cache, f, indent=4)
 
+    def _parse_time_features(self, timestamp):
+        """פונקציה עזר לחילוץ מאפייני זמן מtimestamp"""
+        try:
+            dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+            hour = dt.hour
+            
+            # קביעת חלק יום
+            if 5 <= hour < 12:
+                time_of_day = "Morning"
+            elif 12 <= hour < 17:
+                time_of_day = "Afternoon"
+            elif 17 <= hour < 21:
+                time_of_day = "Evening"
+            else:
+                time_of_day = "Night"
+            
+            return {
+                "date": dt.strftime("%Y-%m-%d"),
+                "time": dt.strftime("%H:%M"),
+                "time_of_day": time_of_day,
+                "day_of_week": dt.strftime("%A"),
+                "hour": hour
+            }
+        except Exception as e:
+            print(f"⚠️ Could not parse timestamp '{timestamp}': {e}")
+            return {
+                "date": "N/A",
+                "time": "N/A",
+                "time_of_day": "Unknown",
+                "day_of_week": "N/A",
+                "hour": None
+            }
+
     def enrich_trip_data(self, photos):
         """
-        עובר על כל התמונות ומעשיר אותן במיקום ומזג אוויר.
+        עובר על כל התמונות ומעשיר אותן במיקום, מזג אוויר וזמן.
         מיישם מנגנון Cache ו-Throttle (השהייה) למניעת חסימות.
         """
         enriched_photos = []
@@ -36,10 +70,12 @@ class TripCoordinator:
             lon = photo['gps']['lon']
             timestamp = photo['timestamp']
             
-            # יצירת מפתח ייחודי למיקום (עיגול ל-3 ספרות לדיוק שכונתי וחיסכון בבקשות)
+            # 1. Time Features
+            time_data = self._parse_time_features(timestamp)
+            
+            # 2. Location (עם Cache)
             location_key = f"{round(lat, 3)},{round(lon, 3)}"
             
-            # 1. שליפת מיקום (עם Cache)
             if location_key in self.cache:
                 location_data = self.cache[location_key]
             else:
@@ -47,18 +83,19 @@ class TripCoordinator:
                 location_data = self.geo.get_location_details(lat, lon)
                 self.cache[location_key] = location_data
                 self._save_cache()
-                time.sleep(1.1) # הגנה על ה-API של Nominatim
+                time.sleep(1.1)
             
-            # 2. שליפת מזג אוויר (דינמי לפי תאריך)
-            # הערה: Open-Meteo פחות נוקשים ב-Rate Limit, אבל כדאי להיזהר
+            # 3. Weather
             weather_data = self.weather.get_weather(lat, lon, timestamp)
             
-            # 3. Data Fusion - איחוד הנתונים לאובייקט אחד
-            # 3. Data Fusion - איחוד הנתונים לאובייקט אחד (המבנה המפורט)
+            # 4. Data Fusion
             enriched_photo = {
                 "id": photo['id'],
-                "time": timestamp,
-                # אנחנו שומרים את כל האובייקט שהגיע מה-GeoService
+                "timestamp": timestamp,
+                "date": time_data['date'],
+                "time": time_data['time'],
+                "time_of_day": time_data['time_of_day'],
+                "day_of_week": time_data['day_of_week'],
                 "location": {
                     "lat": location_data.get('lat'),
                     "lon": location_data.get('lon'),
@@ -73,29 +110,24 @@ class TripCoordinator:
                 }
             }
             enriched_photos.append(enriched_photo)
+            
         return enriched_photos
     
     def save_enriched_data(self, enriched_data, output_file="data/enriched_photos.json"):
-            """שומר את נתוני התמונות המועשרים לקובץ JSON"""
-            with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(enriched_data, f, indent=4, ensure_ascii=False)
-            print(f"✅ Success! Enriched data saved to {output_file}")
-    
+        """שומר את נתוני התמונות המועשרים לקובץ JSON"""
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(enriched_data, f, indent=4, ensure_ascii=False)
+        print(f"✅ Enriched data saved to {output_file}")
 
-# בדיקת הרצה מהירה
+
+# בדיקת הרצה
 if __name__ == "__main__":
     from src.services.geo_service import GeoService
     from src.services.weather_service import WeatherService
     
-    # 1. טעינת נתוני המקור
     with open('data/mock_photos.json', 'r') as f:
         mock_data = json.load(f)
         
-    # 2. אתחול ה-Coordinator
     coord = TripCoordinator(GeoService(), WeatherService())
-    
-    # 3. העשרת הנתונים (שים לב - בזכות ה-Cache זה יהיה מהיר עכשיו!)
     full_results = coord.enrich_trip_data(mock_data)
-    
-    # 4. שמירה לקובץ
     coord.save_enriched_data(full_results)

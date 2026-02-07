@@ -1,9 +1,9 @@
 import os
+import re
 from openai import OpenAI
 from dotenv import load_dotenv
 from pathlib import Path
 
-# מוצא את הנתיב האמיתי של תיקיית הפרויקט
 base_dir = Path(__file__).resolve().parent.parent.parent
 env_path = base_dir / '.env'
 load_dotenv(dotenv_path=env_path)
@@ -11,79 +11,110 @@ load_dotenv(dotenv_path=env_path)
 class LLMService:
     def __init__(self):
         api_key = os.getenv("OPENAI_API_KEY")
-        
-        if api_key:
-            print(f"DEBUG: Key loaded starting with: {api_key[:10]}...")
-        else:
-            print(f"DEBUG: No API key found at {env_path}")
-            
         self.client = OpenAI(api_key=api_key)
         self.model = "gpt-4o-mini"
 
-    def _generate_data_summary(self, enriched_data, limit=20):
-        """
-        פונקציית עזר: הופכת את ה-JSON לטקסט קריא וממוקד עבור ה-LLM.
-        זה עוזר למנוע 'רעש' ולוודא שה-AI רואה את הכתובת המלאה.
-        """
+    def _generate_data_summary(self, enriched_data, limit=50):
+        """Data Fusion: combines geo + weather + time data"""
         summary = ""
         for p in enriched_data[:limit]:
             loc = p.get('location', {})
-            # חילוץ נתונים עם Fallback למקרה ששדות ריקים
+            weath = p.get('weather', {})
+            
             summary += (
-                f"- ID: {p.get('id')}, "
-                f"City: {loc.get('city', 'Unknown')}, "
-                f"Area: {loc.get('suburb', 'N/A')}, "
-                f"POI: {loc.get('poi', 'None')}, "
-                f"Address: {loc.get('full_address', 'N/A')}\n"
+                f"📷 ID: {p.get('id')}\n"
+                f"   📅 {p.get('date')} ({p.get('day_of_week')})\n"
+                f"   🕐 {p.get('time')} - {p.get('time_of_day')}\n"
+                f"   📍 {loc.get('city', 'Unknown')}, {loc.get('suburb', 'N/A')}\n"
+                f"   🏛️ Near: {loc.get('poi') or loc.get('full_address', 'N/A')}\n"
+                f"   🌤️ {weath.get('temp', 'N/A')}, {weath.get('condition', 'N/A')}\n\n"
             )
+        
+        if len(enriched_data) > limit:
+            summary += f"\n... and {len(enriched_data) - limit} more photos\n"
+            
         return summary
 
-    def get_album_suggestions(self, enriched_data, user_query):
+    def get_album_suggestions(self, enriched_data, user_query, chat_history=None):
         """
-        שולח את הנתונים המועשרים ל-LLM ומקבל הצעות לארגון אלבומים.
+        Decision Logic:
+        - Factual questions → Answer from metadata
+        - Creative requests → LLM generates ideas
+        - Photo IDs → Validated to prevent hallucinations
         """
-        
-        # 1. יצירת הסיכום המזוקק
         data_summary = self._generate_data_summary(enriched_data)
 
-        # 2. הגדרת ההנחיות למודל
+        # Control Strategy: Prompt engineering to reduce hallucinations
         system_prompt = """
-            You are an expert Photo Curator and Travel Assistant. 
-            Your goal is to organize travel photos based ONLY on the provided metadata (location, time, and weather).
+You are an expert Photo Curator and Travel Assistant.
 
-            STRICT RULES:
-            1. RELEVANCE: If photos don't match the query, explicitly state it.
-            2. DATA FUSION: Combine city, POI, and suburb to create descriptive names.
-            3. HALLUCINATION: Use ONLY the IDs and locations provided.
-            #4. NAMING: Generate collective names for albums. Avoid specifics like 'Sunny' if not all photos share that trait.
-             #  Example: Use 'Barcelona Exploration' instead of 'Sunny Barcelona' if weather varies.
-            4. NAMING: Create names that feel like travel experiences rather than geographic labels. Example: Use 'Gothic Quarter Vibes' or 'Hidden Gems of Gràcia' instead of 'Old Town Photos'. Ensure the name represents the entire group of photos provided.
-            5. FALLBACK: If 'POI' is empty, look at 'Address' to identify the landmark.
-            6. TONE: Helpful and proactive, yet grounded in data.
-            """
+CONVERSATION STYLE:
+- When user says "those", "them", "these" - refer to photos from your previous response
+- When user says "also", "too", "add" - combine with the previous request  
+- When user says "different", "other" - provide alternatives to previous suggestion
+- Track the context of what was discussed before
 
-        # 3. בניית התוכן שנשלח (הזרקת המשתנים)
+STRICT RULES:
+1. CONTEXT MEMORY: Remember all previous requests in this conversation
+2. DIRECT ANSWERS: If user asks about weather, dates, or locations, answer directly from metadata
+3. DATA FUSION: Use location AND weather together for creative album names
+4. HALLUCINATION PREVENTION: Use ONLY the photo IDs provided in the data. Never invent IDs.
+5. NAMING: Create experience-based album names (e.g., 'Rainy Morning Cafés' not 'Album 1')
+6. FALLBACK: Use 'Address' field if 'POI' is empty
+7. BE SPECIFIC: Always include the actual photo IDs when suggesting albums
+
+FORMAT:
+When suggesting albums, use this structure:
+**Album Name** (X photos)
+- Photo IDs: [list the actual IDs]
+- Description: [brief context]
+"""
+
+        # Multi-turn: build messages with history
+        messages = [{"role": "system", "content": system_prompt}]
+        
+        if chat_history:
+            for msg in chat_history[-10:]:
+                messages.append({
+                    "role": msg["role"],
+                    "content": msg["content"]
+                })
+        
         user_content = f"""
-        User Request: "{user_query}"
+User Request: "{user_query}"
 
-        Below is the summarized data from the user's photos:
-        {data_summary}
+Trip Data Summary:
+{data_summary}
 
-        Please suggest 2-3 logical albums. For each album, provide:
-        - A creative name
-        - A brief description based on the location/address
-        - List of photo IDs included
-        """
+Please answer the question or suggest 2-3 logical albums.
+"""
+        messages.append({"role": "user", "content": user_content})
 
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_content}
-                ],
+                messages=messages,
                 temperature=0.7
             )
-            return response.choices[0].message.content
+            
+            ai_response = response.choices[0].message.content
+            
+            # Hallucination Detection: validate IDs
+            valid_ids = {str(p["id"]) for p in enriched_data}
+            mentioned_ids = re.findall(r'ID[s]?[:\s]+([0-9,\s]+)', ai_response)
+            
+            if mentioned_ids:
+                all_mentioned = []
+                for match in mentioned_ids:
+                    ids_in_match = [id.strip() for id in match.split(',')]
+                    all_mentioned.extend(ids_in_match)
+                
+                invalid_ids = [id for id in all_mentioned if id and id not in valid_ids]
+                
+                if invalid_ids:
+                    ai_response += f"\n\n⚠️ Warning: IDs {', '.join(invalid_ids)} don't exist in your trip data."
+            
+            return ai_response
+            
         except Exception as e:
             return f"Error contacting OpenAI: {e}"

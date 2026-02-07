@@ -1,5 +1,4 @@
 import requests
-from datetime import datetime
 
 class WeatherService:
     def __init__(self):
