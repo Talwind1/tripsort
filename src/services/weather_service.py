@@ -6,8 +6,7 @@ class WeatherService:
 
     def get_weather(self, lat, lon, timestamp):
         """
-        שולף מזג אוויר היסטורי לפי מיקום וזמן.
-        timestamp: מחרוזת בפורמט ISO (למשל 2024-05-10T10:30:00)
+       Convert GPS coordinates to location details
         """
         # extracting (YYYY-MM-DD)
         date_str = timestamp.split('T')[0]

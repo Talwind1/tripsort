@@ -31,7 +31,7 @@ def main():
     llm = LLMService()
 
     chat_history = []
-    # 2. לולאת הצ'אט
+    # chat loop     
     while True:
         user_query = Prompt.ask("\n[bold green]How would you like to organize your trip photos today?[/bold green] (type 'exit' to quit)")
         

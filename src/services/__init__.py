@@ -1,1 +1,0 @@
-from src.services.weather_service import WeatherService
