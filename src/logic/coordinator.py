@@ -72,7 +72,7 @@ class TripCoordinator:
             # 1. Time Features
             time_data = self._parse_time_features(timestamp)
             
-            # 2. Location (עם Cache)
+            # 2. Location (Cache)
             location_key = f"{round(lat, 3)},{round(lon, 3)}"
             
             if location_key in self.cache:
@@ -118,7 +118,7 @@ class TripCoordinator:
         print(f"✅ Enriched data saved to {output_file}")
 
 
-#test run
+# Quick test
 if __name__ == "__main__":
     from src.services.geo_service import GeoService
     from src.services.weather_service import WeatherService

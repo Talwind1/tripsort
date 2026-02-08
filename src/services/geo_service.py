@@ -9,7 +9,7 @@ class GeoService:
 
     def get_location_details(self, lat, lon):
         """
-        הופך קואורדינטות לכתובת מפורטת.
+        Convert GPS coordinates to location details       
         """
         params = {
             "lat": lat,
@@ -40,8 +40,8 @@ class GeoService:
         except Exception as e:
             print(f"Geo API Error: {e}")
             return None
-
-# quick check
+        
+# Quick test
 if __name__ == "__main__":
     service = GeoService()
     test_res = service.get_location_details(41.4036, 2.1744)

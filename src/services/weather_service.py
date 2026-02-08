@@ -6,7 +6,7 @@ class WeatherService:
 
     def get_weather(self, lat, lon, timestamp):
         """
-       Convert GPS coordinates to location details
+        Fetch historical weather data for location and timestamp.
         """
         # extracting (YYYY-MM-DD)
         date_str = timestamp.split('T')[0]
@@ -51,7 +51,7 @@ class WeatherService:
         }
         return mapping.get(code, "Cloudy")
 
-#quick test 
+# Quick test
 if __name__ == "__main__":
     service = WeatherService()
     result = service.get_weather(41.3871, 2.1701, "2024-05-10T10:30:00")
