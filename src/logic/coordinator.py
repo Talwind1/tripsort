@@ -14,24 +14,23 @@ class TripCoordinator:
         self.cache = self._load_cache()
 
     def _load_cache(self):
-        """טוען את המטמון מהקובץ אם הוא קיים"""
+        """load cache if exists"""
         if os.path.exists(self.cache_file):
             with open(self.cache_file, 'r') as f:
                 return json.load(f)
         return {}
 
     def _save_cache(self):
-        """שומר את המטמון לקובץ"""
+        """save cache to file"""
         with open(self.cache_file, 'w') as f:
             json.dump(self.cache, f, indent=4)
 
     def _parse_time_features(self, timestamp):
-        """פונקציה עזר לחילוץ מאפייני זמן מtimestamp"""
+        """extract date, time, and part of the day from timestamp"""
         try:
             dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
             hour = dt.hour
             
-            # קביעת חלק יום
             if 5 <= hour < 12:
                 time_of_day = "Morning"
             elif 12 <= hour < 17:
@@ -60,8 +59,8 @@ class TripCoordinator:
 
     def enrich_trip_data(self, photos):
         """
-        עובר על כל התמונות ומעשיר אותן במיקום, מזג אוויר וזמן.
-        מיישם מנגנון Cache ו-Throttle (השהייה) למניעת חסימות.
+        attach weather + location to raw data with external services. 
+        Uses caching and rate limiting for API efficiency.
         """
         enriched_photos = []
         
@@ -85,10 +84,9 @@ class TripCoordinator:
                 self._save_cache()
                 time.sleep(1.1)
             
-            # 3. Weather
             weather_data = self.weather.get_weather(lat, lon, timestamp)
             
-            # 4. Data Fusion
+            # Data Fusion
             enriched_photo = {
                 "id": photo['id'],
                 "timestamp": timestamp,
@@ -114,13 +112,13 @@ class TripCoordinator:
         return enriched_photos
     
     def save_enriched_data(self, enriched_data, output_file="data/enriched_photos.json"):
-        """שומר את נתוני התמונות המועשרים לקובץ JSON"""
+        """Save enriched photos to JSON file"""
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(enriched_data, f, indent=4, ensure_ascii=False)
         print(f"✅ Enriched data saved to {output_file}")
 
 
-# בדיקת הרצה
+#test run
 if __name__ == "__main__":
     from src.services.geo_service import GeoService
     from src.services.weather_service import WeatherService

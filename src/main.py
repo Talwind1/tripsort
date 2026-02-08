@@ -12,15 +12,15 @@ from src.services.weather_service import WeatherService
 console = Console()
 
 def main():
-    console.print(Panel("📸 [bold blue]Welcome to TripSort AI[/bold blue]\nYour Personal Photo Curator", expand=False))
-    # 1. טעינת הנתונים המועשרים (אם קיימים) או יצירתם מחדש
+    console.print(Panel("Welcome to TripSort AI-Your Personal Photo Curator"))
+    # load data
     enriched_path = 'data/enriched_photos.json'
     
     if not os.path.exists(enriched_path):
-        console.print("[yellow]Enriched data not found. Processing photos first...[/yellow]")
+        console.print("Enriched data not found. Processing photos first...")
         with open('data/mock_photos.json', 'r') as f:
             mock_data = json.load(f)
-        
+
         coordinator = TripCoordinator(GeoService(), WeatherService())
         enriched_data = coordinator.enrich_trip_data(mock_data)
         coordinator.save_enriched_data(enriched_data)
@@ -30,6 +30,7 @@ def main():
 
     llm = LLMService()
 
+    chat_history = []
     # 2. לולאת הצ'אט
     while True:
         user_query = Prompt.ask("\n[bold green]How would you like to organize your trip photos today?[/bold green] (type 'exit' to quit)")
@@ -39,11 +40,13 @@ def main():
             break
 
         with console.status("[bold blue]AI is analyzing your photos and weather data...[/bold blue]"):
-            suggestion = llm.get_album_suggestions(enriched_data, user_query)
+            suggestion = llm.get_album_suggestions(enriched_data, user_query, chat_history=chat_history)
 
-        # 3. הצגת התוצאה
         console.print("\n[bold magenta]AI Suggestions:[/bold magenta]")
         console.print(Panel(suggestion, border_style="green"))
+
+        chat_history.append({"role": "user", "content": user_query})
+        chat_history.append({"role": "assistant", "content": suggestion})
 
 if __name__ == "__main__":
     main()

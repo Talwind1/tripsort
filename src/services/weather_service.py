@@ -9,7 +9,7 @@ class WeatherService:
         שולף מזג אוויר היסטורי לפי מיקום וזמן.
         timestamp: מחרוזת בפורמט ISO (למשל 2024-05-10T10:30:00)
         """
-        # חילוץ התאריך בלבד (YYYY-MM-DD)
+        # extracting (YYYY-MM-DD)
         date_str = timestamp.split('T')[0]
         
         params = {
@@ -26,11 +26,10 @@ class WeatherService:
             response.raise_for_status()
             data = response.json()
 
-            # שליפת הנתונים מהיום היחיד שביקשנו
             max_temp = data['daily']['temperature_2m_max'][0]
             weather_code = data['daily']['weather_code'][0]
 
-            # תרגום קוד מזג האוויר לתיאור טקסטואלי פשוט
+            # weather code to textual desctiption
             condition = self._translate_weather_code(weather_code)
             
             return {
@@ -42,7 +41,6 @@ class WeatherService:
             return {"temp": "Unknown", "condition": "Unknown"}
 
     def _translate_weather_code(self, code):
-        """מתרגם קודי WMO לתיאור מילולי"""
         mapping = {
             0: "Clear sky",
             1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
@@ -54,9 +52,8 @@ class WeatherService:
         }
         return mapping.get(code, "Cloudy")
 
-# בדיקה מהירה של השירות
+#quick test 
 if __name__ == "__main__":
     service = WeatherService()
-    # בדיקה על אחת התמונות מהמוקה (10 למאי בברצלונה)
     result = service.get_weather(41.3871, 2.1701, "2024-05-10T10:30:00")
     print(f"Weather Result: {result}")
